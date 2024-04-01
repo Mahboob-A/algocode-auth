@@ -21,13 +21,13 @@ env = environ.Env()
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
 # apps directory
-APP_DIR = ROOT_DIR / 'core_apps'
+APP_DIR = ROOT_DIR / "core_apps"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DJANGO_DEGUB', False)
+DEBUG = env.bool("DJANGO_DEGUB", False)
 
 
 # Application definition
@@ -58,13 +58,13 @@ THIRD_PARTH_APPS = [
 ]
 
 LOCAL_APPS = [
-    "core_apps.common", 
-    "core_apps.users", 
+    "core_apps.common",
+    "core_apps.users",
     "core_apps.profiles",
 ]
 
 # installed apps
-INSTALLED_APPS = DJANGO_APPS + THIRD_PARTH_APPS + LOCAL_APPS 
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTH_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
@@ -154,10 +154,10 @@ USE_I18N = True
 
 USE_TZ = True
 
-SITE_ID = 1 
+SITE_ID = 1
 
 # admin url
-ADMIN_URL = 'algoadmin/'
+ADMIN_URL = "algoadmin/"
 
 
 # Static files (CSS, JavaScript, Images)
@@ -180,10 +180,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ############################ CORS And AUTH Packages Settings.
 
-# if frontend is hosted on different domain, cors is needed. 
+# if frontend is hosted on different domain, cors is needed.
 CORS_URLS_REGEX = r"^api/.*$"
 
-# AUTH_USER_MODEL = 
+# AUTH_USER_MODEL =
 
 ########################################################
 # logging
