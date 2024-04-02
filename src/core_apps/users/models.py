@@ -3,6 +3,7 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _ 
+from django.urls import reverse
 
 import uuid 
 
@@ -46,3 +47,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self): 
         return f'USER: {self.first_name.title()} {self.last_name.title()}'
+
+    def get_absolute_url(self):
+        return reverse('user-details', kwargs={"id": self.id})

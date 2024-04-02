@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
+from django.urls import reverse, reverse_lazy
+
 from phonenumber_field.modelfields import PhoneNumberField
 
 from core_apps.common.models import TimeStampModel
@@ -48,3 +50,6 @@ class Profile(TimeStampModel):
 
     def __str__(self):
         return f"{self.user.get_full_name()}'s Profile"
+
+    def get_absolute_url(self):
+        return reverse('profile-details-id', kwargs={"id": self.id})
