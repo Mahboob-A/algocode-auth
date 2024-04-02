@@ -49,4 +49,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return f'USER: {self.first_name.title()} {self.last_name.title()}'
 
     def get_absolute_url(self):
-        return reverse('user-details', kwargs={"id": self.id})
+        return reverse('user-details-id', kwargs={"id": self.id})
