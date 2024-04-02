@@ -46,6 +46,8 @@ DJANGO_APPS = [
 THIRD_PARTH_APPS = [
     "rest_framework",
     "django_filters",
+    "django_countries",
+    "phonenumber_field",
     "drf_yasg",
     "corsheaders",
     "djcelery_email",
@@ -184,7 +186,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # if frontend is hosted on different domain, cors is needed.
 CORS_URLS_REGEX = r"^api/.*$"
 
-# AUTH_USER_MODEL =
+AUTH_USER_MODEL = "users.CustomUser"
 
 ########################################################
 # logging

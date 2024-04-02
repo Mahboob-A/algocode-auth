@@ -6,3 +6,6 @@ class ProfilesConfig(AppConfig):
     name = "core_apps.profiles"
     verbose_name = _("Profile")
     verbose_name_plural = _("Profiles")
+    
+    def ready(self): 
+        from core_apps.profiles import signals 
