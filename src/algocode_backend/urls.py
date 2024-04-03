@@ -6,6 +6,7 @@ from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
+from django.conf.urls.static import static
 
 from core_apps.users.views import CustomUserDetailsView, CustomUserDetailsView2
 
@@ -44,3 +45,6 @@ urlpatterns = [
     # profile app
     path("api/v1/profiles/", include("core_apps.profiles.urls")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
