@@ -181,6 +181,63 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 ########################################################
 
+############################ Auth and DRF Settings
+""" API and AUTH SETTINGS """
+
+#   Rest Framework Settings
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+}
+
+# DRF Simple JWT Settings
+SIMPLE_JWT = {
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=120),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    # "SIGNING_KEY": env("SIGNING_KEY"),
+    "USER_ID_FIELD": "id",
+    "USER_IF_CLAIM": "user_id",
+}
+
+# DJ Rest AUTH Settings
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "algocode-backend-access-token",
+    "JWT_AUTH_REFRESH_COOKIE": "algocode-backend-refresh-token",
+    "REGISTER_SERIALIZER": "core_apps.users.serializers.CustomRegisterSerializer",
+}
+
+# Auth Backend
+AUTHENTICATION_BACKENDS = [
+    "allauth.account.auth_backends.AuthenticationBackend",
+    "django.contrib.auth.backends.ModelBackend",
+]
+
+
+############################ Allauth Settings
+# non email verification
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+# with email verification
+# ACCOUNT_AUTHENTICATION_METHOD = "email"
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+# ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+# ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+# ACCOUNT_USERNAME_REQUIRED = False
+
 ############################ CORS And AUTH Packages Settings.
 
 # if frontend is hosted on different domain, cors is needed.
