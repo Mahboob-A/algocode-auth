@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-
 from pathlib import Path
 
 from datetime import timedelta
@@ -19,7 +18,9 @@ import environ
 env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-ROOT_DIR = Path(__file__).resolve().parent.parent
+# this effectively pointing to the SRC dir where the manage.py file is located.
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
+# print("root dir: ", ROOT_DIR)
 
 # apps directory
 APP_DIR = ROOT_DIR / "core_apps"

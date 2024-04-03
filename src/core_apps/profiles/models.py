@@ -23,7 +23,7 @@ class Profile(TimeStampModel):
     profile_photo = models.ImageField(
         verbose_name=_("Profile Photo"),
         upload_to="CustomUsers/ProfilePictures/",
-        default="CustomUsers/default-user-image.jpg",
+        default="CustomUsers/demo-jp.jpg",
     )
     gender = models.CharField(
         verbose_name=_("Gender"),
@@ -49,7 +49,9 @@ class Profile(TimeStampModel):
     )
 
     def __str__(self):
-        return f"{self.user.get_full_name()}'s Profile"
+        f_name = self.user.first_name
+        l_name = self.user.last_name 
+        return f"{f_name.title()} {l_name.title()}'s Profile"
 
     def get_absolute_url(self):
         return reverse('profile-details-id', kwargs={"id": self.id})

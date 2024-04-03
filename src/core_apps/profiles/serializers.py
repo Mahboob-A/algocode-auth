@@ -39,10 +39,9 @@ class ProfileSerializer(serializers.ModelSerializer):
         return str(obj.id)
 
     def get_full_name(self, obj):
-        return obj.user.get_full_name()
-        # first_name = obj.user.first_name
-        # last_name = obj.user.last_name
-        # return f"{first_name.title()} {last_name.title()}"
+        first_name = obj.user.first_name
+        last_name = obj.user.last_name
+        return f"{first_name.title()} {last_name.title()}"
 
     def get_profile_photo(self, obj):
         return obj.profile_photo.url

@@ -32,6 +32,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     class Meta: 
         verbose_name = _('User')
         verbose_name_plural = _('Users')
+        ordering = ['-created_at']
 
     @property
     def get_full_name(self): 
@@ -46,7 +47,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def __str__(self): 
-        return f'USER: {self.first_name.title()} {self.last_name.title()}'
+        if self.is_superuser: 
+            return f'ADMIN: {self.first_name.title()} {self.last_name.title()}'
+        elif self.is_staff: 
+            return f"STAFF: {self.first_name.title()} {self.last_name.title()}"
+        else: 
+            return f"USER: {self.first_name.title()} {self.last_name.title()}"
 
     def get_absolute_url(self):
         return reverse('user-details-id', kwargs={"id": self.id})
