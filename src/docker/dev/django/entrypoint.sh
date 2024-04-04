@@ -4,6 +4,7 @@ set -o errexit
 set -o pipefail 
 set -o nounset 
 
+# check if POSTGRES_USER is empty, then add the default "postgres" as the user. 
 if [ -z "${POSTGRES_USER}" ]; then 
     base_postgres_image_default_user='postgres'
     export POSTGRES_USER="${base_postgres_image_default_user}"
