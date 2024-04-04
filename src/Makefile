@@ -34,8 +34,8 @@ docker-volume:
 docker-exec-postgres: 
 	docker compose -f dev.yml exec postgres /bin/bash 
 
-medium-database: 
-	docker compose -f dev.yml exec postgres psql --username=mahboob --dbname=medium-db 
+algocode-database: 
+	docker compose -f dev.yml exec postgres psql --username=mahboob --dbname=algocode-db 
 
 # ## 
 
