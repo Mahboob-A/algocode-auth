@@ -6,7 +6,7 @@ from .base import env  # noqa: E501
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
-    default="django-insecure-1b85e9_7riupf=te$-7k(qr2a#8a6z$0+m4zht&34avjt!*c8l",
+    default="5b39bcce08a6a7d7168a4b1b5c43143d021f672ebf50c5aff0d6dd7c30a4",
 )
 
 DEBUG = True 
@@ -14,3 +14,12 @@ DEBUG = True
 CSRF_TRUSTED_ORIGINS = ["http://localhost:8080", "http://127.0.0.1:8080"]
 
 ALLOWED_HOSTS = ["127.0.0.1"]
+
+
+# EMAIL BACKEND #
+EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+EMAIL_HOST = env("EMAIL_HOST", default="mailhog")
+DOMAIN = env("EMAIL_DOMAIN")
+EMAIL_PORT = env("EMAIL_PORT")
+DEFAULT_FROM_EMAIL = "iammahboob.a@gmail.com"
+SITE_NAME = "Algocode Backend"

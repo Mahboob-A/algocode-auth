@@ -58,14 +58,14 @@ RUN pip install --no-cache-dir --no-index --find-links=/wheels/ /wheels/* \
 
 # check if database is ready from the entrypoint 
 # copy the entrypoint 
-COPY ./docker/dev/django/entrypoint /entrypoint
+COPY ./docker/dev/django/entrypoint.sh /entrypoint.sh
 
 # tell docker that is unix based system not windows 
-RUN sed -i 's/\r$//g' /entrypoint
+RUN sed -i 's/\r$//g' /entrypoint.sh
 
 # give the user execution permission (+x) with chmod to /entrypoiny dir  
 # checks the postgres db availability 
-RUN chmod +x /entrypoint 
+RUN chmod +x /entrypoint.sh
 
 
 # copy the app 
@@ -95,4 +95,4 @@ RUN chmod +x /start-flower
 
 COPY . ${APP_HOME} 
 
-ENTRYPOINT ["/entrypoint"]
+ENTRYPOINT ["/entrypoint.sh"]
