@@ -10,6 +10,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core_apps.users.serializers import UserSerializer
+from core_apps.users.renderers import UserJSONRenderer
+from core_apps.common.utils import generate_full_url
+
 
 User = get_user_model()
 
@@ -18,9 +21,8 @@ class CustomUserDetailsView(RetrieveUpdateAPIView):
     """API for authenticated user's details"""
 
     serializer_class = UserSerializer
-    permission_classes = [
-        IsAuthenticated,
-    ]
+    renderer_classes = [UserJSONRenderer]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self):
         user_id = self.kwargs.get("id", None)
@@ -32,8 +34,16 @@ class CustomUserDetailsView(RetrieveUpdateAPIView):
         else:
             return self.request.user
 
-    def get_queryset(self):
-        return get_user_model().objects.none()
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        profile_link = generate_full_url(request=request, instance=instance, instance_profile=True)
+        user_link = generate_full_url(request=request, instance=instance)
+
+        response_data = serializer.data
+        response_data["links"] = {"self": profile_link, "user": user_link}
+        return Response(response_data)
 
 
 class CustomUserDetailsView2(APIView):
