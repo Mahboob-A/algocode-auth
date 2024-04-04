@@ -1,0 +1,116 @@
+version: "3.9"
+# 040424, Thursday, 11.00 am 
+services: 
+  api: 
+    restart: always 
+    build: 
+      context: . # codes in the current dir of the yml file
+      dockerfile: ./docker/dev/django/Dockerfile
+    volumes: 
+      - .:/app:z # so that the host and the docker files are in sync and any changes are reflected into docker
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles 
+    expose: 
+      - "8000"
+    env_file: 
+      - ./.envs/.dev/.django
+      - ./.envs/.dev/.postgres
+    depends_on: 
+      - postgres 
+      - mailhog
+      - redis
+    command: /start  # start command 
+    networks: 
+      - algocode-backend-api-network 
+
+  postgres: 
+    build: 
+      context: . 
+      dockerfile: ./docker/dev/postgres/Dockerfile
+    volumes: 
+      - dev_postgres_data:/var/lib/postgresql/data
+      - dev_postgres_data_backups:/backups
+    env_file: 
+      - ./.envs/.dev/.postgres 
+    networks: 
+      - algocode-backend-api-network 
+    
+    
+  mailhog: 
+    image: mailhog/mailhog:v1.0.0
+    container_name: mailhog
+    ports: 
+      - "8025:8025"
+    networks: 
+      - algocode-backend-api-network 
+    
+  redis: 
+    image: redis:7-alpine
+    networks: 
+      - algocode-backend-api-network 
+
+  celery_worker: 
+    restart: always
+    build:  
+      context: . 
+      dockerfile: ./docker/dev/django/Dockerfile
+    command: /start-celeryworker
+    volumes: 
+      - .:/app
+    env_file: 
+      - ./.envs/.dev/.django
+      - ./.envs/.dev/.postgres
+    depends_on:   
+      - mailhog 
+      - postgres 
+      - redis 
+    networks: 
+      - algocode-backend-api-network
+    
+  flower: 
+    build: 
+      context: . 
+      dockerfile: ./docker/dev/django/Dockerfile
+    command: /start-flower 
+    volumes: 
+      - flower_data:/data
+    env_file: 
+      - ./.envs/.dev/.django
+      - ./.envs/.dev/.postgres
+    depends_on:   
+      - postgres 
+      - redis 
+    ports: 
+      - "5555:5555"
+    networks: 
+      - algocode-backend-api-network
+
+
+  nginx: 
+    build: 
+      context: . 
+      dockerfile: ./docker/dev/nginx/Dockerfile
+    restart: always
+    depends_on: 
+      - api 
+    volumes: 
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles 
+    ports: 
+      - "8080:80"
+    networks: 
+      - algocode-backend-api-network
+  
+networks: 
+  algocode-backend-api-network: 
+    driver: bridge
+  
+
+volumes: 
+  static_volume: 
+  media_volume: 
+  dev_postgres_data: {}
+  dev_postgres_data_backups: {}
+  flower_data: {}
+  
+  
