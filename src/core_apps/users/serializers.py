@@ -7,6 +7,10 @@ from allauth.account.utils import setup_user_email
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from django.contrib.auth import get_user_model
 
+# jwt
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.tokens import RefreshToken
+
 # others
 from django_countries.serializer_fields import CountryField
 from phonenumber_field.serializerfields import PhoneNumberField
@@ -56,7 +60,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CustomRegisterSerializer(RegisterSerializer):
-    username = None
+    username = serializers.CharField(required=True)
     first_name = serializers.CharField(required=True)
     last_name = serializers.CharField(required=True)
     email = serializers.EmailField(required=True)
@@ -66,6 +70,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     def get_cleaned_data(self):
         super().get_cleaned_data()
         return {
+            "username": self.validated_data.get("username", ""),
             "email": self.validated_data.get("email", ""),
             "first_name": self.validated_data.get("first_name", ""),
             "last_name": self.validated_data.get("last_name", ""),
@@ -84,8 +89,47 @@ class CustomRegisterSerializer(RegisterSerializer):
         user.first_name = self.cleaned_data.get("first_name")
         user.last_name = self.cleaned_data.get("last_name")
 
+        user.username = self.cleaned_data.get("username")
         user.email = self.cleaned_data.get("email")
 
         user.password = self.cleaned_data.get("password1")
 
         return user
+
+
+class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """Serializer class to include some other user info in the jwt claim."""
+
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # additional user details to the token payload
+        token["first_name"] = user.first_name
+        token["last_name"] = user.last_name
+        token["username"] = user.username
+        token["email"] = user.email
+        return token
+
+
+class UserTokenSerializer(TokenObtainPairSerializer):
+    """Serializer to pass data along with access and refresh toke. USER DATA is not encoded into access token."""
+
+    user = serializers.SerializerMethodField()
+
+    def get_user(self, user):
+        return {
+            "id": user.id,
+            "username": user.username,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "email": user.email,
+        }
+
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        refresh = self.get_token(self.user)
+        data["refresh"] = str(refresh)
+        data["access"] = str(refresh.access_token)
+        data["user"] = self.get_user(self.user)
+        return data

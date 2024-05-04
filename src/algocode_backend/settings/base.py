@@ -17,10 +17,16 @@ import environ
 
 env = environ.Env()
 
+ENVIRONMENT_TYPE = ".dev"
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # this effectively pointing to the SRC dir where the manage.py file is located.
 ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 # print("root dir: ", ROOT_DIR)
+
+# setup correct env path
+env.read_env(Path(str(ROOT_DIR)) / f".envs/{ENVIRONMENT_TYPE}/.django")
+env.read_env(Path(str(ROOT_DIR)) / f".envs/{ENVIRONMENT_TYPE}/.postgres")
 
 # apps directory
 APP_DIR = ROOT_DIR / "core_apps"
@@ -107,15 +113,15 @@ WSGI_APPLICATION = "algocode_backend.wsgi.application"
 
 
 # current using default db for testing.
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": ROOT_DIR / "db.sqlite3",
-#     }
-# }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": ROOT_DIR / "db.sqlite3",
+    }
+}
 
 # TODO prod Database
-DATABASES = {"default": env.db("DATABASE_URL")}
+# DATABASES = {"default": env.db("DATABASE_URL")}
 
 
 # Password Hashers (argon2-cffi)
@@ -161,7 +167,7 @@ USE_TZ = True
 SITE_ID = 1
 
 # admin url
-ADMIN_URL = "algoadmin/"
+ADMIN_URL = env("ADMIN_URL")
 
 
 # Static files (CSS, JavaScript, Images)
@@ -200,7 +206,7 @@ if USE_TZ:
 #   Rest Framework Settings
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",  # JWTCookieAuthentication
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -211,7 +217,7 @@ REST_FRAMEWORK = {
 # DRF Simple JWT Settings
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=120),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=7200),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "SIGNING_KEY": env("SIGNING_KEY"),
@@ -222,20 +228,23 @@ SIMPLE_JWT = {
 # DJ Rest AUTH Settings
 REST_AUTH = {
     "USE_JWT": True,
+    "JWT_AUTH_HTTPONLY": False,  # to get refresh token. also client side JS will be able to access to cookie
     "JWT_AUTH_COOKIE": "algocode-backend-access-token",
     "JWT_AUTH_REFRESH_COOKIE": "algocode-backend-refresh-token",
     "REGISTER_SERIALIZER": "core_apps.users.serializers.CustomRegisterSerializer",
+    "JWT_TOKEN_CLAIMS_SERIALIZER": "core_apps.users.serializers.CustomTokenObtainPairSerializer",
 }
 
-# Auth Backend
+#  CustomTokenObtainPairSerializer
+
+# Allauth Auth Settings
 AUTHENTICATION_BACKENDS = [
     "allauth.account.auth_backends.AuthenticationBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 
 
-############################ Allauth Settings
-# non email verification
+############################ Allauth Settings non email verification
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 # ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_USERNAME_REQUIRED = False
@@ -248,8 +257,8 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USER_MODEL_USERNAME_FIELD = "username"  # usernam field
+ACCOUNT_USERNAME_REQUIRED = True  # username required at registration time.
 
 ############################ CORS And AUTH Packages Settings.
 
