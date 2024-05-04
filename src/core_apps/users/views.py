@@ -57,3 +57,16 @@ class CustomUserDetailsView2(APIView):
         return Response(
             {"status": "success", "data": serializer.data}, status=status.HTTP_200_OK
         )
+
+
+from core_apps.users.serializers import CustomTokenObtainPairSerializer, UserTokenSerializer
+
+
+class UserTokenObtainPairView(APIView):
+    '''API to get access and refresh token.'''
+    serializer_class = CustomTokenObtainPairSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return Response(serializer.validated_data)

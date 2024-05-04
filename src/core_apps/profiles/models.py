@@ -45,13 +45,29 @@ class Profile(TimeStampModel):
     )
 
     twitter_handle = models.CharField(
-        verbose_name=_("Twitter/X Handle"), max_length=25, blank=True, default=""
+        verbose_name=_("Twitter/X Username"), max_length=25, blank=True, default=""
+    )
+
+    leetcode_handle = models.CharField(
+        verbose_name=_("Leetcode Username"), max_length=25, blank=True, default=""
+    )
+
+    code_forces_handle = models.CharField(
+        verbose_name=_("CodeForces Username"), max_length=25, blank=True, default=""
+    )
+
+    github_handle = models.CharField(
+        verbose_name=_("Github Username"), max_length=25, blank=True, default=""
+    )
+
+    linked_in_handle = models.CharField(
+        verbose_name=_("LinkedIn Username"), max_length=25, blank=True, default=""
     )
 
     def __str__(self):
         f_name = self.user.first_name
-        l_name = self.user.last_name 
+        l_name = self.user.last_name
         return f"{f_name.title()} {l_name.title()}'s Profile"
 
     def get_absolute_url(self):
-        return reverse('profile-details-id', kwargs={"id": self.id})
+        return reverse("profile-details-id", kwargs={"id": self.id})

@@ -13,8 +13,8 @@ User = get_user_model()
 @admin.register(User)
 class UserAdminClass(BaseUserAdmin):
     ordering = ["email"]
-#     form = UserChangeForm
-#     add_form = UserCreationForm
+    # form = UserChangeForm
+    # add_form = UserCreationForm
 
     model = User
     list_display = [
@@ -32,10 +32,15 @@ class UserAdminClass(BaseUserAdmin):
     list_filter = ["email", "is_staff", "is_active"]
 
     fieldsets = (
-        (_("Login Credentials"), {"fields": ("email", "password")}),
+        (_("Login Credentials"), {"fields": ("username", "email", "password")}),
         (
             _("User Information"),
-            {"fields": ("first_name", "last_name",)},
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                )
+            },
         ),
         (
             _("Permissions and Groups"),
@@ -50,7 +55,7 @@ class UserAdminClass(BaseUserAdmin):
             },
         ),
         (_("Events"), {"fields": ("created_at",)}),
-        (_("Other Events"), {"fields": ("last_login", )}),
+        (_("Other Events"), {"fields": ("last_login",)}),
     )
 
     add_fieldsets = (
@@ -59,6 +64,7 @@ class UserAdminClass(BaseUserAdmin):
             {
                 "classes": ("wide",),
                 "fields": (
+                    "username",
                     "email",
                     "first_name",
                     "last_name",

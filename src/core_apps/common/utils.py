@@ -1,7 +1,9 @@
 def get_current_host(request) -> str:
-    ''' Returns the host url with current scheme '''
+    """Returns the host url with current scheme"""
     scheme = request.is_secure() and "https" or "http"
-    return f"{scheme}://{request.get_host()}"
+    port = 8000
+    # http://127.0.0.1:8000
+    return f"{scheme}://{request.get_host()}:{port}"
 
 
 def generate_full_url(
@@ -13,6 +15,8 @@ def generate_full_url(
 
     if we want the User url if instance=Profile, pass instance_user
     if we want the Profile url if instance=User, pass instance_profile
+
+    example instance_url: /api/v1/profiles/profile/34735ef8-1e0a-4bb1-b41c-93e70eb358b1/
     """
     if (
         instance_user

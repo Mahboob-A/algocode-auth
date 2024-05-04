@@ -85,7 +85,7 @@ class ProfileUpdateAPIView(generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         is_partial = True if request.method == "PATCH" else False
-        print('is partial: ', is_partial)
+        # print('is partial: ', is_partial)
         instance = self.get_object()
         serializer = self.get_serializer(
             instance,
