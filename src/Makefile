@@ -3,10 +3,10 @@
 # ### Docker management commands 
  
 docker-up: 
-	docker compose -f dev.yml up --build -d --remove-orphans 
+	docker compose -p algocode_backend -f dev.yml up --build -d --remove-orphans 
 
 docker-down: 
-	docker compose -f dev.yml down
+	docker compose -p algocode_backend -f dev.yml down
 
 docker-down-v: 
 	docker compose -f dev.yml down -v
@@ -47,7 +47,7 @@ docker-logs-celery:
 	docker compose -f dev.yml logs celery_worker
 
 docker-logs-redis:
-	docker compose -f dev.yml logs redis
+	docker compose -f dev.yml logs redis-for-celery
 
 docker-logs-flower:
 	docker compose -f dev.yml logs flower

@@ -1,4 +1,3 @@
-version: "3.9"
 # 040424, Thursday, 11.00 am 
 services: 
   api: 
@@ -18,7 +17,7 @@ services:
     depends_on: 
       - postgres 
       - mailhog
-      - redis
+      - redis-for-celery
     command: /start  # start command 
     networks: 
       - algocode-backend-api-network 
@@ -44,7 +43,7 @@ services:
     networks: 
       - algocode-backend-api-network 
     
-  redis: 
+  redis-for-celery: 
     image: redis:7-alpine
     networks: 
       - algocode-backend-api-network 
@@ -63,7 +62,7 @@ services:
     depends_on:   
       - mailhog 
       - postgres 
-      - redis 
+      - redis-for-celery
     networks: 
       - algocode-backend-api-network
     
@@ -79,7 +78,7 @@ services:
       - ./.envs/.dev/.postgres
     depends_on:   
       - postgres 
-      - redis 
+      - redis-for-celery
     ports: 
       - "5555:5555"
     networks: 
