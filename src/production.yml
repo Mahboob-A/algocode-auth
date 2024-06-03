@@ -1,0 +1,72 @@
+# 040424, Thursday, 11.00 am 
+services: 
+  api: &api   # acchor of api to reuse the api content.  
+    restart: always 
+    build: 
+      context: . 
+      dockerfile: ./docker/production/django/Dockerfile
+    image: algocode-backend-api-image
+    volumes: 
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles 
+    env_file: 
+      - ./.envs/.production/.django
+      - ./.envs/.production/.postgres
+    depends_on: 
+      - postgres 
+      - redis-for-celery
+    command: /start  
+    networks: 
+      - algocode-backend-reverse-proxy-nw
+
+  postgres: 
+    build: 
+      context: . 
+      dockerfile: ./docker/production/postgres/Dockerfile
+    image: algocode-backend-db-image
+    volumes: 
+      - production_postgres_data:/var/lib/postgresql/data
+      - production_postgres_data_backups:/backups
+    env_file: 
+      - ./.envs/.production/.postgres 
+    networks: 
+      - algocode-backend-reverse-proxy-nw 
+
+    
+  redis-for-celery: 
+    image: redis:7-alpine
+    networks: 
+      - algocode-backend-reverse-proxy-nw
+
+  celery_worker:   # using anchor of api service. 
+    <<: *api 
+    image: algocode-backend-celery-image
+    command: /start-celeryworker
+    networks: 
+      - algocode-backend-reverse-proxy-nw
+    
+  flower: 
+    <<: *api 
+    image: algocode-backend-flower-image
+    command: /start-flower 
+    volumes: 
+      - flower_data:/data
+    ports: 
+      - "5555:5555"
+    networks: 
+      - algocode-backend-reverse-proxy-nw
+
+  
+networks: 
+  algocode-backend-reverse-proxy-nw: 
+    external: true 
+  
+
+volumes: 
+  static_volume: {}
+  media_volume: {}
+  production_postgres_data: {}
+  production_postgres_data_backups: {}
+  flower_data: {}
+  
+  
