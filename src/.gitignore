@@ -8,6 +8,8 @@ __pycache__/
 
 mediafiles/
 staticfiles/
+install.txt
+install.txt/
 
 # Distribution / packaging
 .Python

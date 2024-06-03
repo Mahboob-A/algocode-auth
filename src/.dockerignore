@@ -6,3 +6,5 @@ venv/
 htmlcov/
 staticfiles/
 mediafiles/
+install.txt
+install.txt/

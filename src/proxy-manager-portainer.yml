@@ -1,0 +1,35 @@
+
+# docker compose for nginx reverse proxy and portainer. see nginx reverse proxy documentation for more advanced settings.  
+services:
+  app:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "81:81"
+      - "443:443"
+    volumes:
+      - ./data:/data
+      - ./letsencrypt:/etc/letsencrypt
+
+      
+  portainer:
+    image: portainer/portainer-ce:latest 
+    privileged: true
+    volumes:
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports: 
+      - "8000:8000"
+      - "9443:9443"
+      - "9000:9000"
+    restart: always
+
+      
+volumes:
+  portainer_data: {}
+
+networks:
+  default: 
+   name: algocode-backend-reverse-proxy-network
+   external: true 
