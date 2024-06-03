@@ -1,0 +1,69 @@
+#!/usr/bin/env bash 
+
+
+# the main script to restore postgrest backed-up database 
+
+set -o errexit 
+set -o nounset
+set -o pipefail 
+
+# get the currect file address
+work_dir="$(dirname ${0})"
+
+# import necessary files 
+source "${work_dir}/_sourced/constants.sh"
+source "${work_dir}/_sourced/messages.sh"
+
+
+# if 1st param len is zero(which is of file), then exit 
+if [[ -z ${1+x} ]]; then 
+    message_error "Backup filename is not provided. It is required to backup. Please provide a correct backup filename."
+    exit 1 
+fi 
+
+backup_filename="${BACKUP_DIR_PATH}/${1}"
+
+
+# check if the 'backup_filename' is exists. 
+if [[ ! -f "${backup_filename}" ]]; then 
+    message_error "No backup with the specified backup filename found. 
+    Check the the maintenance/'backups' to see if there is one and try again."
+    exit 1 
+fi 
+
+message_welcome "Restoring the '${POSTGRES_DB} database from the '${backup_filename}' backup..."
+
+
+# default postgres user is not allowed to restore as backing up as default user postgrers is halted in backup script. 
+if [[ "${POSTGRES_USER}" == "postgres" ]]; then 
+    message_error "Restoring as default 'postgres' user is not allowed to restore. Assign 'POSTGRES_USER' in env file with custom user."
+    exit 1 
+fi 
+
+
+# Everyting is all right. Restore the backup 
+
+# exporinting the postgres credentials 
+export PGHOST="${POSTGRES_HOST}"
+export PGPORT="${POSTGRES_PORT}"
+export PGUSER="${POSTGRES_USER}"
+export PGPASSWORD="${POSTGRES_PASSWORD}"
+export PGDATABASE="${POSTGRES_DB}"
+
+message_info "Dropping the database..."
+
+# drop the current db 
+dropdb "${PGDATABASE}" 
+
+message_info "Creating a new database..."
+
+# create new db with POSTGRES_USER
+createdb --owner="${POSTGRES_USER}"
+
+message_info "Applying the backup to the new database..."
+
+# unzip the backup | execute the sql command in the std input by psql 
+gunzip -c "${backup_filename}" | psql "${POSTGRES_DB}"
+
+
+message_success "The '${POSTGRES_DB}' has been restored successfully from the '${backup_filename}' backtup."

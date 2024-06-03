@@ -1,0 +1,15 @@
+#!/usr/bin/env bash 
+
+# the script to see postgres database backups 
+
+# get the currect file address
+work_dir="$(dirname ${0})"
+
+# import necessary files 
+source "${work_dir}/_sourced/constants.sh"
+source "${work_dir}/_sourced/messages.sh"
+
+
+message_welcome "The available backups are below..."
+
+ls -lht "${BACKUP_DIR_PATH}"

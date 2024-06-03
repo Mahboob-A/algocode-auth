@@ -1,0 +1,18 @@
+#!/bin/bash 
+
+
+set -o errexit 
+
+
+set -o nounset 
+
+
+python /home/algocode/app/manage.py makemigrations --no-input 
+python /home/algocode/app/manage.py migrate --no-input 
+python /home/algocode/app/manage.py collectstatic --no-input  
+
+
+# the project is running on 9001 port. 
+exec /usr/local/bin/gunicorn algocode_backend.wsgi:application --bind 0.0.0.0:9001 --chdir=/home/algocode/app
+
+
