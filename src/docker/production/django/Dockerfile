@@ -113,19 +113,7 @@ COPY --chown=algocode:algocode . ${APP_HOME}
 
 # ownership of APP_HOME
 RUN chown algocode:algocode ${APP_HOME}nx: 
-#   build: 
-#     context: . 
-#     dockerfile: ./docker/production/nginx/Dockerfile
-#   restart: always
-#   depends_on: 
-#     - api 
-#   volumes: 
-#     - static_volume:/app/staticfiles
-#     - media_volume:/app/mediafiles 
-#   ports: 
-#     - "8080:80"
-#   networks: 
-#     - algocode-backend-reverse-proxy-network
+
 
 USER algocode
 
