@@ -1,0 +1,8 @@
+#!/bin/bash 
+
+set -o errexit 
+
+set -o nounset 
+
+exec celery -A algocode_backend.celery worker -l INFO
+ 
