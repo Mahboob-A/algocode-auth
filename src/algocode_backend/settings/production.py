@@ -13,8 +13,13 @@ DATABASES = {"default": env.db("DATABASE_URL")}
 
 # Django security settings.
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["auth.algocode.site"])
+# ALLOWED_HOSTS = ["127.0.0.1"]
 
-CSRF_TRUSTED_ORIGINS = ["https://auth.algocode.site", "https://algocode.site"]
+CSRF_TRUSTED_ORIGINS = [
+    "https://auth.algocode.site",
+    "https://algocode.site",
+    # "http://127.0.0.1:8080",
+]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
@@ -23,10 +28,10 @@ SECURE_SSL_REDIRECT = env("DJANGO_SECURE_SSL_REDIRECT", default=True)
 # TODO check if cookie is used. else false.
 SESSION_COOKIE_SECURE = True
 
-CSRF_COOKIE_SECURE = True 
+CSRF_COOKIE_SECURE = True
 
 # TODO caution. 518400 seconds as 6 days. use wisely.
-SECURE_HSTS_SECONDS = 60 
+SECURE_HSTS_SECONDS = 60
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
 
@@ -61,7 +66,7 @@ EMAIL_USE_TLS = True
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "filters": {"require_debug_false": {"()": "django.utils.log.RequieDebugFalse"}},
+    "filters": {"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"}},
     "formatters": {
         "verbose": {
             "format": "%(levelname)s  %(asctime)s %(module)s  %(process)d %(thread)d %(message)s "

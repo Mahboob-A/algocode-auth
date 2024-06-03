@@ -7,6 +7,7 @@
 ARG PYTHON_VERSION=3.10-bullseye
 
 
+
 FROM python:${PYTHON_VERSION} as python 
 
 
@@ -31,9 +32,11 @@ RUN pip wheel --wheel-dir /usr/src/app/wheel \
 # image 
 FROM python as python-run-stage 
 
+RUN addgroup --system algocode && adduser --system --ingroup algocode algocode 
+
 # args
 ARG BUILD_ENVIRONMENT=production
-ARG APP_HOME=/app 
+ARG APP_HOME=/home/algocode/app 
 
 # envs 
 ENV PYTHONDONTWRITEBYTECODE 1 
@@ -43,13 +46,14 @@ ENV BUILD_ENV ${BUILD_ENVIRONMENT}
 
 WORKDIR ${APP_HOME}
 
+
 # creating an user for the backend. (algocode is the user and group)
-# create user and group and create staticfiles dir, and give permission of the dir to the user. 
-RUN addgroup --system algocode && \ 
-        adduser --system --ingroup algocode algocode && \ 
-        mkdir -p ${APP_HOME}/staticfiles && \
-        chown algocode:algocode ${APP_HOME}/staticfiles && \
-        chmod 775 ${APP_HOME}/staticfiles
+
+
+#  create staticfiles dir, and give permission of the dir to the user. 
+RUN mkdir -p ${APP_HOME}/staticfiles ${APP_HOME}/mediafiles && \
+        chown -R algocode:algocode ${APP_HOME}/staticfiles ${APP_HOME}/mediafiles && \
+        chmod -R 775 ${APP_HOME}/staticfiles ${APP_HOME}/mediafiles
 
 
 
@@ -105,8 +109,23 @@ RUN chmod +x /start-flower
 
 COPY --chown=algocode:algocode . ${APP_HOME} 
 
+
+
 # ownership of APP_HOME
-RUN chown algocode:algocode ${APP_HOME}
+RUN chown algocode:algocode ${APP_HOME}nx: 
+#   build: 
+#     context: . 
+#     dockerfile: ./docker/production/nginx/Dockerfile
+#   restart: always
+#   depends_on: 
+#     - api 
+#   volumes: 
+#     - static_volume:/app/staticfiles
+#     - media_volume:/app/mediafiles 
+#   ports: 
+#     - "8080:80"
+#   networks: 
+#     - algocode-backend-reverse-proxy-network
 
 USER algocode
 

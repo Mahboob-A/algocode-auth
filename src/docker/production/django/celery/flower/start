@@ -1,31 +1,25 @@
 #!/bin/bash 
 
 set -o errexit 
-
 set -o nounset
 
 # checking if the celery worker is available 
 check_worker_ready(){
-        celery -A algocode_backend.celery inspect ping 
+    celery -A algocode_backend.celery inspect ping 
 }
 
 # until the check_worker_ready function returns True, the loop is continued. 
 until check_worker_ready; do 
-
-
->&2 echo 'Waiting for Celery Workers to become available .... '
-
-sleep 1 
-
-# once True is retuened, the loop is ended. 
+    >&2 echo 'Waiting for Celery Workers to become available .... '
+    sleep 1 
+# once True is returned, the loop is ended. 
 done 
 
-
->&2 'Celery workers are available and ready!...'
+>&2 echo 'Celery workers are available and ready!...'
 
 # celery start 
 exec celery \
-        - A algocode_backend.celery \
-        -b "${CELERY_BROKER_URL}" \ 
-        flower \
-        --basic_auth="${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}"
+    -A algocode_backend.celery \
+    -b "${CELERY_BROKER_URL}" \
+    flower \
+    --basic_auth="${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}"

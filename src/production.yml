@@ -5,7 +5,7 @@ services:
     build: 
       context: . 
       dockerfile: ./docker/production/django/Dockerfile
-    image: algocode-backend-api-image
+    image: api-image
     volumes: 
       - static_volume:/app/staticfiles
       - media_volume:/app/mediafiles 
@@ -17,48 +17,64 @@ services:
       - redis-for-celery
     command: /start  
     networks: 
-      - algocode-backend-reverse-proxy-nw
+      - algocode-backend-reverse-proxy-network
 
   postgres: 
     build: 
       context: . 
       dockerfile: ./docker/production/postgres/Dockerfile
-    image: algocode-backend-db-image
+    image: pg-image
     volumes: 
       - production_postgres_data:/var/lib/postgresql/data
       - production_postgres_data_backups:/backups
     env_file: 
       - ./.envs/.production/.postgres 
     networks: 
-      - algocode-backend-reverse-proxy-nw 
+      - algocode-backend-reverse-proxy-network
 
     
   redis-for-celery: 
     image: redis:7-alpine
     networks: 
-      - algocode-backend-reverse-proxy-nw
+      - algocode-backend-reverse-proxy-network
 
   celery_worker:   # using anchor of api service. 
     <<: *api 
-    image: algocode-backend-celery-image
+    image: celery-image
     command: /start-celeryworker
     networks: 
-      - algocode-backend-reverse-proxy-nw
+      - algocode-backend-reverse-proxy-network
     
   flower: 
     <<: *api 
-    image: algocode-backend-flower-image
-    command: /start-flower 
+    image: flower-image
+    command: /start-flower
     volumes: 
       - flower_data:/data
     ports: 
       - "5555:5555"
     networks: 
-      - algocode-backend-reverse-proxy-nw
+      - algocode-backend-reverse-proxy-network
+    
+  # use nginx-proxy-manager 
+  # nginx: 
+  #   build: 
+  #     context: . 
+  #     dockerfile: ./docker/production/nginx/Dockerfile
+  #   restart: always
+  #   depends_on: 
+  #     - api 
+  #   volumes: 
+  #     - static_volume:/app/staticfiles
+  #     - media_volume:/app/mediafiles 
+  #   ports: 
+  #     - "8080:80"
+  #   networks: 
+  #     - algocode-backend-reverse-proxy-network
 
   
 networks: 
-  algocode-backend-reverse-proxy-nw: 
+  algocode-backend-reverse-proxy-network: 
     external: true 
   
 
