@@ -7,8 +7,8 @@ services:
       dockerfile: ./docker/production/django/Dockerfile
     image: api-image
     volumes: 
-      - algocode_production_auth_static_volume:/app/staticfiles
-      - algocode_production_auth_media_volume:/app/mediafiles 
+      - production_algocode_auth_static_volume:/app/staticfiles
+      - production_algocode_auth_media_volume:/app/mediafiles 
     env_file: 
       - ./.envs/.production/.django
       - ./.envs/.production/.postgres
@@ -17,7 +17,7 @@ services:
       - redis-for-celery
     command: /start  
     networks: 
-      - algocode-production-auth-service-network
+      - production-algocode-auth-service-network
 
   postgres: 
     build: 
@@ -25,49 +25,49 @@ services:
       dockerfile: ./docker/production/postgres/Dockerfile
     image: pg-image
     volumes: 
-      - algocode_production_auth_production_postgres_data:/var/lib/postgresql/data
-      - algocode_production_auth_production_postgres_data_backups:/backups
+      - production_algocode_auth_postgres_data:/var/lib/postgresql/data
+      - production_algocode_auth_postgres_data_backups:/backups
     env_file: 
       - ./.envs/.production/.postgres 
     networks: 
-      - algocode-production-auth-service-network
+      - production-algocode-auth-service-network
 
     
   redis-for-celery: 
     image: redis:7-alpine
     networks: 
-      - algocode-production-auth-service-network
+      - production-algocode-auth-service-network
 
   celery_worker:   # using anchor of api service. 
     <<: *api 
     image: celery-image
     command: /start-celeryworker
     networks: 
-      - algocode-production-auth-service-network
+      - production-algocode-auth-service-network
     
   flower: 
     <<: *api 
     image: flower-image
     command: /start-flower
     volumes: 
-      - algocode_production_auth_flower_data:/data
+      - production_algocode_auth_flower_data:/data
     ports: 
       - "5555:5555"
     networks: 
-      - algocode-production-auth-service-network
+      - production-algocode-auth-service-network
     
 
 # TODO create the network in the server. 
 networks: 
-  algocode-production-auth-service-network: 
+  production-algocode-auth-service-network: 
     external: true 
   
 
 volumes: 
-  algocode_production_auth_static_volume: {}
-  algocode_production_auth_media_volume: {}
-  algocode_production_auth_production_postgres_data: {}
-  algocode_production_auth_production_postgres_data_backups: {}
-  algocode_production_auth_flower_data: {}
+  production_algocode_auth_static_volume: {}
+  production_algocode_auth_media_volume: {}
+  production_algocode_auth_postgres_data: {}
+  production_algocode_auth_postgres_data_backups: {}
+  production_algocode_auth_flower_data: {}
   
   

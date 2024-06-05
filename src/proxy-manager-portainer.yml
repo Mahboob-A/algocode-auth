@@ -2,7 +2,7 @@
 # This compose file shold be run inside the server. 
 # docker compose for nginx reverse proxy and portainer. see nginx reverse proxy documentation for more advanced settings.  
 # create the network if already not created. 
-# copy the compose file in the specified dir in the server, and then run the compose file. 
+# copy the compose file in the specified dir in the server or in the /opt/create_a_dir cd to new_dir and then run the compose file. 
 # docker compose -p algocode_auth_service_monitor -f proxy-manager-portainer.yml up -d --remove-orphans 
 # NOTE: put the correct compose file name after -f flag. 
 
@@ -15,16 +15,16 @@ services:
       - "81:81"
       - "443:443"
     volumes:
-      - nginx_proxy_manager_data:/data
-      - nginx_letsencrypt_data:/etc/letsencrypt
+      - production_algocode_npm_data:/data  # npm nginx proxy manager
+      - production_algocode_npn_letsencrypt_data:/etc/letsencrypt
     networks:
-      - algocode-backend-auth-service-network
+      - production-algocode-auth-service-network
       
   portainer:
     image: portainer/portainer-ce:latest 
     privileged: true
     volumes:
-      - portainer_data:/data
+      - production_algocode_portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     ports: 
       - "8000:8000"
@@ -32,16 +32,16 @@ services:
       - "9000:9000"
     restart: always
     networks:
-      - algocode-backend-auth-service-network
+      - production-algocode-auth-service-network
 
 
 
-# TODO Create the network in the server 
+# TODO Create the Network in the EC2 Server. WIthin this network, the Auth Service (production.yml) is Running. 
 networks:
-  algocode-backend-auth-service-network:
+  production-algocode-auth-service-network:
    external: true 
 
 volumes:
-  portainer_data: {}
-  nginx_proxy_manager_data: {}
-  nginx_letsencrypt_data: {}
+  production_algocode_portainer_data: {}
+  production_algocode_npm_data: {}
+  production_algocode_npn_letsencrypt_data: {}
