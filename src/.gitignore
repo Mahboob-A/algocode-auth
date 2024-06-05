@@ -8,6 +8,8 @@ __pycache__/
 
 mediafiles/
 staticfiles/
+install.txt
+install.txt/
 
 # Distribution / packaging
 .Python
@@ -123,6 +125,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+data/
 .env
 .venv
 env/
@@ -132,6 +135,10 @@ env.bak/
 venv.bak/
 .envs 
 .envs/
+letsencrypt
+letsencrypt/
+testing_script.sh
+
 
 # Spyder project settings
 .spyderproject
