@@ -3,7 +3,8 @@
 # docker compose for nginx reverse proxy and portainer. see nginx reverse proxy documentation for more advanced settings.  
 # create the network if already not created. 
 # copy the compose file in the specified dir in the server, and then run the compose file. 
-# docker compose -p algocode_auth_service_monitor -f production.yml up -d --remove-orphans 
+# docker compose -p algocode_auth_service_monitor -f proxy-manager-portainer.yml up -d --remove-orphans 
+# NOTE: put the correct compose file name after -f flag. 
 
 services:
   app:

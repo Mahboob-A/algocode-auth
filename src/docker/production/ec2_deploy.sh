@@ -3,8 +3,12 @@
 set -o errexit 
 set -o nounset 
 
+# TODO ProStream EC2 server has been used to deploy the project. 
+#  Make sure the Environment variables are properly exported in the HOST Machine. 
+
+
 # Export the variables in the host machine. 
-if [[ -z "${AUTH_CODE_MANAGER_EC2_SERVER_IP_ADDRESS}" ]]; then
+if [[ -z "${PROSTREAM_ALGO_AUTH_EC2_IP_ADDR}" ]]; then
     echo "EC2 Server IP Address for Auth and Code Manager Service is not defined."
     echo "Please export the EC2 server IP address in host machine and try again."
     exit 1
@@ -19,13 +23,13 @@ git archive --format tar --output ./production_project.tar main
 
 echo "Uploading the Project to the server ... " 
 
-rsync -e "ssh -i ${AUTH_CODE_MANAGER_EC2_SERVER_PEM_PATH}" ./production_project.tar ubuntu@"${AUTH_CODE_MANAGER_EC2_SERVER_IP_ADDRESS}":/tmp/production_project.tar
+rsync -e "ssh -i ${PROSTREAM_ALGO_AUTH_EC2_PEM}" ./production_project.tar ubuntu@"${PROSTREAM_ALGO_AUTH_EC2_IP_ADDR}":/tmp/production_project.tar
 
 echo "Upload complete ... "
 
 echo "Building the docker compose  ... "
 
-ssh -i "${AUTH_CODE_MANAGER_EC2_SERVER_PEM_PATH}" -o StrictHostKeyChecking=no ubuntu@"${AUTH_CODE_MANAGER_EC2_SERVER_IP_ADDRESS}" << 'ENDSSH'
+ssh -i "${PROSTREAM_ALGO_AUTH_EC2_PEM}" -o StrictHostKeyChecking=no ubuntu@"${PROSTREAM_ALGO_AUTH_EC2_IP_ADDR}" << 'ENDSSH'
 
     PROJECT_PATH=/home/ubuntu/algocode-auth-service/backend 
     LOG_PATH=/home/ubuntu/algocode-auth-service/logs
