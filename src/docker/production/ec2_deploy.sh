@@ -23,13 +23,13 @@ git archive --format tar --output ./production_project.tar main
 
 echo "Uploading the Project to the server ... " 
 
-rsync -e "ssh -i ${PROSTREAM_ALGO_AUTH_EC2_PEM}" ./production_project.tar ubuntu@"${PROSTREAM_ALGO_AUTH_EC2_IP_ADDR}":/tmp/production_project.tar
+rsync -e "ssh -i ${ALGOCODE_AUTHRCEE_EC2_PEM}" ./production_project.tar ubuntu@"${ALGOCODE_AUTHRCEE_EC2_IP_ADDR}":/tmp/production_project.tar
 
 echo "Upload complete ... "
 
 echo "Building the docker compose  ... "
 
-ssh -i "${PROSTREAM_ALGO_AUTH_EC2_PEM}" -o StrictHostKeyChecking=no ubuntu@"${PROSTREAM_ALGO_AUTH_EC2_IP_ADDR}" << 'ENDSSH'
+ssh -i "${ALGOCODE_AUTHRCEE_EC2_PEM}" -o StrictHostKeyChecking=no ubuntu@"${ALGOCODE_AUTHRCEE_EC2_IP_ADDR}" << 'ENDSSH'
 
     PROJECT_PATH=/home/ubuntu/algocode-auth-service/backend 
     LOG_PATH=/home/ubuntu/algocode-auth-service/logs
