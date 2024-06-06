@@ -3,39 +3,42 @@
 # ### Docker management commands 
  
 docker-up: 
-	docker compose -p algocode_auth_service -f production.yml up --build -d --remove-orphans 
+	docker compose -p algocode_auth_service -f dev.yml up --build -d --remove-orphans 
 
 docker-down: 
-	docker compose -p algocode_auth_service -f production.yml down
+	docker compose -p algocode_auth_service -f dev.yml down
 
 docker-down-v: 
-	docker compose -p algocode_auth_service -f production.yml down -v
+	docker compose -p algocode_auth_service -f dev.yml down -v
 
 docker-logs: 
-	docker compose -p algocode_auth_service -f production.yml logs 
+	docker compose -p algocode_auth_service -f dev.yml logs 
 
 docker-logs-api: 
-	docker compose -p algocode_auth_service -f production.yml logs api 
+	docker compose -p algocode_auth_service -f dev.yml logs api 
 
 docker-restart-api: 
-	docker compose -p algocode_auth_service -f production.yml restart api 
+	docker compose -p algocode_auth_service -f dev.yml restart api 
 
 docker-exec-api: 
-	docker compose -p algocode_auth_service -f production.yml exec api /bin/bash 
+	docker compose -p algocode_auth_service -f dev.yml exec api /bin/bash 
 
 docker-check-deploy:
-	docker compose -p algocode_auth_service -f production.yml run --rm api python manage.py check --deploy 
+	docker compose -p algocode_auth_service -f dev.yml run --rm api python manage.py check --deploy 
 
 # ## 
 
 
 # ### Docker Volume and Postgres Database 
 
+docker-volume: 
+	docker volume inspect src_dev_postgres_data
+
 docker-exec-postgres: 
-	docker compose -p algocode_auth_service -f production.yml exec postgres /bin/bash 
+	docker compose -p algocode_auth_service -f dev.yml exec postgres /bin/bash 
 
 algocode-database: 
-    docker compose -p algocode_auth_service -f production.yml exec postgres psql --username="$(POSTGRES_USER)" --dbname="$(POSTGRES_DB)" 
+	docker compose -p algocode_auth_service -f dev.yml exec postgres psql --username=mahboob --dbname=algocode-db 
 
 # ## 
 
@@ -44,16 +47,19 @@ algocode-database:
 # ### Services logs commands 
 
 docker-logs-celery:
-	docker compose -p algocode_auth_service -f production.yml logs celery_worker
+	docker compose -p algocode_auth_service -f dev.yml logs celery_worker
 
 docker-logs-redis:
-	docker compose -p algocode_auth_service -f production.yml logs redis-for-celery
+	docker compose -p algocode_auth_service -f dev.yml logs redis-for-celery
 
 docker-logs-flower:
-	docker compose -p algocode_auth_service -f production.yml logs flower
+	docker compose -p algocode_auth_service -f dev.yml logs flower
+
+docker-logs-mailhog:
+	docker compose -p algocode_auth_service -f dev.yml logs mailhog
 
 docker-logs-postgres: 
-	docker compose -p algocode_auth_service -f production.yml logs postgres
+	docker compose -p algocode_auth_service -f dev.yml logs postgres
 
 # ## 
 
@@ -62,16 +68,16 @@ docker-logs-postgres:
 # ### Django Commands
 
 makemigrations: 
-	docker compose -p algocode_auth_service -f production.yml run --rm api python manage.py makemigrations
+	docker compose -p algocode_auth_service -f dev.yml run --rm api python manage.py makemigrations
 
 migrate: 
-	docker compose -p algocode_auth_service -f production.yml run --rm api python manage.py migrate
+	docker compose -p algocode_auth_service -f dev.yml run --rm api python manage.py migrate
 
 collectstatic: 
-	docker compose -p algocode_auth_service -f production.yml run --rm api python manage.py collectstatic --no-input --clear 
+	docker compose -p algocode_auth_service -f dev.yml run --rm api python manage.py collectstatic --no-input --clear 
 
 superuser: 
-	docker compose -p algocode_auth_service -f production.yml run --rm api python manage.py createsuperuser 
+	docker compose -p algocode_auth_service -f dev.yml run --rm api python manage.py createsuperuser 
 
 # ## 
 

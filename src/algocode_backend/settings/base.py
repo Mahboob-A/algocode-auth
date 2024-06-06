@@ -18,7 +18,7 @@ import environ
 env = environ.Env()
 
 # TODO Change the env type: .dev for development. .production for production
-ENVIRONMENT_TYPE = ".production"
+ENVIRONMENT_TYPE = ".dev"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # this effectively pointing to the SRC dir where the manage.py file is located.
@@ -122,9 +122,8 @@ WSGI_APPLICATION = "algocode_backend.wsgi.application"
 #     }
 # }
 
-# TODO prod Database
 #  PostgreSQL DB for User Management. 
-# Check docker/production/django/entrypoint for definition. 
+# Check docker/dev/django/entrypoint for definition. 
 DATABASES = {"default": env.db("DATABASE_URL")}
 
 
