@@ -39,24 +39,29 @@ SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", def
 # Static file content host
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-
-# Eamil Settings
-DEFAULT_FROM_EMAIL = env("DJANGO_DEFAULT_FROM_EMAIL", default="Algocode Support <support@iammahboob.a@gmail.com>")
-
 SITE_NAME = "Algocode - The Modern Leetcode!"
 
-SERVER_EMAIL = env("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
-
-# TODO check the default whether string of list or not
-EMAIL_SUBJECT_PREFIX = env("DJANGO_EMAIL_SUBJECT_PREFIX", default=["Algocode"])
+# Eamil Settings
 
 EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
+
+# any error logs will be emaild in server email. 
+SERVER_EMAIL = env("DJANGO_SERVER_EMAIL")
+DEFAULT_FROM_EMAIL = env("DJANGO_FROM_EMAIL")
+
+
 EMAIL_HOST = env("DJANGO_EMAIL_HOST")
 EMAIL_HOST_USER = env("DJANGO_EMAIL_HOST_USER")
+
 EMAIL_HOST_PASSWORD = env("DJANGO_SMTP_PASSWORD")
 DOMAIN = env("DJANGO_EMAIL_DOMAIN")
+
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True 
+
+EMAIL_SUBJECT_PREFIX = env(
+    "DJANGO_EMAIL_SUBJECT_PREFIX", default=["Algocode Verification"]
+)
 
 
 ########################################################
