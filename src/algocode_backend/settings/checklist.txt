@@ -1,10 +1,10 @@
-
+# 060624, Thursday, 07.00 am 
 
 Here's the checklist for the Production and Development environment if local run is hampered for configurations. 
 
 Although the development branch has the settings as per the Development stage, and the 
 main branch holds the configs for Production stage, still, if anything unexpected arises, check the checklist below. 
- 
+
 
 This is a general checklist, if anything goes wrong in terms of settings and configurations, 
 make sure to check this checklist depending on the stage:  Development or Production
