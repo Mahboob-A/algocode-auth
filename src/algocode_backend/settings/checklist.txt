@@ -1,0 +1,44 @@
+
+
+Here's the checklist for the Production and Development environment if local run is hampered for configurations. 
+
+Although the development branch has the settings as per the Development stage, and the 
+main branch holds the configs for Production stage, still, if anything unexpected arises, check the checklist below. 
+ 
+
+This is a general checklist, if anything goes wrong in terms of settings and configurations, 
+make sure to check this checklist depending on the stage:  Development or Production
+
+
+A. Checklist for Development: Check if the configs of the below are correct. 
+
+i. settings/base.py: 
+        ENVIRONMENT_TYPE = ".dev"
+
+ii. algocode_backend/asgi.py: 
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "algocode_backend.settings.dev")
+
+iii. algocode_backend/wsgi.py: 
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "algocode_backend.settings.dev")
+
+iv. src/manage.py: 
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "algocode_backend.settings.dev")
+
+
+
+B. Checklist for Production: Check if the configs of the below are correct. 
+
+i. settings/base.py: 
+        ENVIRONMENT_TYPE = ".production"
+
+ii. algocode_backend/asgi.py: 
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "algocode_backend.settings.production")
+
+iii. algocode_backend/wsgi.py: 
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "algocode_backend.settings.production")
+
+iv. src/manage.py: 
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", "algocode_backend.settings.production")
+
+v. The docker network should be externally created. Check if it exists: 
+        production-algocode-auth-service-network

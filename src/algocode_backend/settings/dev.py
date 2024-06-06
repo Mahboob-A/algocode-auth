@@ -23,3 +23,35 @@ DOMAIN = env("EMAIL_DOMAIN")
 EMAIL_PORT = env("EMAIL_PORT")
 DEFAULT_FROM_EMAIL = "iammahboob.a@gmail.com"
 SITE_NAME = "Algocode Backend"
+
+
+########################################################
+# logging
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)s %(name)-12s %(asctime)s %(module)s  %(process)d %(thread)d %(message)s "
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        }
+    },
+    "root": {
+        "level": "INFO",
+        "handlers": ["console"],
+    },
+    # uncomment for django database query logs
+    # 'loggers': {
+    #     'django.db': {
+    #         'level': 'DEBUG',
+    #         'handlers': ['console'],
+    #     }
+    # }
+}
