@@ -15,10 +15,11 @@ if [[ -z "${PROSTREAM_ALGO_AUTH_EC2_IP_ADDR}" ]]; then
 fi 
 
 # upload from main branch (if .envs did not upload, exclude .envs from .gitignore for temporary before running the script)
-git archive --format tar --output ./production_project.tar main 
+# git archive --format tar --output ./production_project.tar main . 
 
 # upload from currnet branch/directory (go to the branch form where the deployment should be uploaded.)
 # tar --exclude='.git' --exclude='docker/production/ec2_deploy.sh' -cvf ./production_project.tar .
+tar --exclude='.git' -cvf ./production_project.tar .
 
 
 echo "Uploading the Project to the server ... " 
