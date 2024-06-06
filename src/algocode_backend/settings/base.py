@@ -114,16 +114,18 @@ WSGI_APPLICATION = "algocode_backend.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 
-# current using default db for testing.
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": ROOT_DIR / "db.sqlite3",
-    }
-}
+#  For Testing.
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": ROOT_DIR / "db.sqlite3",
+#     }
+# }
 
 # TODO prod Database
-# DATABASES = {"default": env.db("DATABASE_URL")}
+#  PostgreSQL DB for User Management. 
+# Check docker/production/django/entrypoint for definition. 
+DATABASES = {"default": env.db("DATABASE_URL")}
 
 
 # Password Hashers (argon2-cffi)
@@ -264,7 +266,8 @@ ACCOUNT_USERNAME_REQUIRED = True  # username required at registration time.
 
 ############################ CORS And AUTH Packages Settings.
 
-# if frontend is hosted on different domain, cors is needed.
+# Ff frontend is hosted on different domain, cors is needed. 
+# All API endpoint must being with "api" prefix.
 CORS_URLS_REGEX = r"^api/.*$"
 
 AUTH_USER_MODEL = "users.CustomUser"

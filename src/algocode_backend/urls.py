@@ -43,7 +43,9 @@ urlpatterns = [
         include("core_apps.users.urls"),
     ),
     # profile app
-    path("api/v1/profiles/", include("core_apps.profiles.urls")),
+    path("api/v1/profile/", include("core_apps.profiles.urls")),
+    # common app
+    path("api/v1/common/", include("core_apps.common.urls")),
 ]
 
 if settings.DEBUG:
