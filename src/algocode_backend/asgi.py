@@ -12,6 +12,6 @@ import os
 from django.core.asgi import get_asgi_application
 
 # TODO change settings in production to production.py 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "algocode_backend.settings.dev")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "algocode_backend.settings.production")
 
 application = get_asgi_application()
