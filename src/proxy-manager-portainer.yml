@@ -3,7 +3,7 @@
 # docker compose for nginx reverse proxy and portainer. see nginx reverse proxy documentation for more advanced settings.  
 # create the network if already not created. 
 # copy the compose file in the specified dir in the server or in the /opt/create_a_dir cd to new_dir and then run the compose file. 
-# docker compose -p algocode_auth_service_monitor -f proxy-manager-portainer.yml up -d --remove-orphans 
+# docker compose -p algocode_auth_rcee_service_monitor -f npm-portainer.yml up -d --remove-orphans 
 # NOTE: put the correct compose file name after -f flag. 
 
 services:
@@ -16,7 +16,7 @@ services:
       - "443:443"
     volumes:
       - production_algocode_npm_data:/data  # npm nginx proxy manager
-      - production_algocode_npn_letsencrypt_data:/etc/letsencrypt
+      - production_algocode_npm_letsencrypt_data:/etc/letsencrypt
     networks:
       - production-algocode-auth-service-network
       
@@ -33,15 +33,19 @@ services:
     restart: always
     networks:
       - production-algocode-auth-service-network
+      - production-algocode-rcee-service-network
 
 
 
 # TODO Create the Network in the EC2 Server. WIthin this network, the Auth Service (production.yml) is Running. 
+#  RCE Engine network to monitor RCE containers in Portainer. 
 networks:
   production-algocode-auth-service-network:
-   external: true 
+   external: true
+  production-algocode-rcee-service-network:
+    external: true
 
 volumes:
   production_algocode_portainer_data: {}
   production_algocode_npm_data: {}
-  production_algocode_npn_letsencrypt_data: {}
+  production_algocode_npm_letsencrypt_data: {}
