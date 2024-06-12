@@ -28,7 +28,7 @@ Algocode is an online data structure and algorithm practice backend built in mic
 
 `Algocode Auth` is responsible for User Management service for `Algocode - a DSA Practice Platform just like Leetcode`. 
 
-To learn more about Algocode, please `READ-THE-BLOG-URL` or visit <a href="https://github.com/Mahboob-A/algocode">Algocode</a> here. 
+To learn more about _Algocode and the architecture_, please `READ-THE-BLOG-URL` or visit <a href="https://github.com/Mahboob-A/algocode">Algocode</a> here. 
 
 Algocode Auth Service uses `celery` to asynchronously send email to users,`Flower` to monitor `celery workers`,  `resend` for email service, and the auth service is a `fully dockerized solution`.
 
@@ -38,13 +38,22 @@ To read more on `Development` or `Production` stage, please follow the below sec
 
 **Workflow** 
 
-Once a user completes a registration in the Algocode platfrom, a _profile_  for the user is also created of the user using **Django Signals**
+Once a user completes a registration in the Algocode platfrom, a _profile_  for the user is also created of the user using **_Django Signals_**
 
-**Documentation**
+**A. Documentation**
 
-Please visit <a href="https://cm-doc.algocode.site/doc/">this documentation page</a>  for the detailed guide on Algocode Auth Service.
+Please visit <a href="https://auth-doc.algocode.site/doc/">the documentation page</a>  for the detailed guide on Algocode Auth Service.
 
 > However, all the APIs are referenced in the **_API Reference_** section below.
+
+**B. Deployment**
+
+> The service is deployed in Azure VM Ubuntu 22.04 server.
+
+**C. About Algocode**
+
+> This is Code Manager Service specific guideline.
+>> **Please visit <a href="https://github.com/Mahboob-A/algocode">Algocode</a> to learn the mircroservices architecture of Algocode and more in-depth guideline how to submit a solution to Algocode platform.**
 
 <br/> <br/><details>
 <summary><h3 align="center">Development Stage</h3></summary>
@@ -79,7 +88,7 @@ The Algocode Auth Services uses the following services to serve the request duri
 
 #### Deployment
 
-The Auth Service is deployed in Azure VM 22.04 Ubuntu Server. 
+The Auth Service is deployed in Azure VM Ubuntu 22.04 Server. 
 
 <br/>
 <br/>  
@@ -219,7 +228,7 @@ Profiles are the more user centric details for a user.
     GET  https://auth.algocode.site/api/v1/profile/all-user-profiles/
 ```
 
-##### Get Profile Details of a User  _(Authenticated)_
+##### Get Profile Details of  an Authenticated User 
 
 ```http
      GET  https://auth.algocode.site/api/v1/profile/profile/
@@ -235,7 +244,7 @@ Profiles are the more user centric details for a user.
 | :-------- | :------- | :------------------------- |
 | `id`    | `string` |  **Required** The `id` of the user to get details  |
 
-##### UPDATE Profile Details of a User  _(Authenticated)_
+##### UPDATE Profile Details of an Authenticated User  
 
 ```http
      GET  https://auth.algocode.site/api/v1/profile/profile/update/
@@ -246,6 +255,12 @@ Profiles are the more user centric details for a user.
 | `gender`    | `string` |   `M`,  for  Male  `F` for Female , or `O` for Other. |
 | `twitter_handle`    | `string` |   `Twitter` handle of the user. |
 | `phone_number`    | `string` |  Phone number of the user.|
+
+#### Healthcheck 
+
+```http
+     GET  https://auth.algocode.site/api/v1/common/healthcheck/
+```
 
 Please visit <a href="https://cm-doc.algocode.site/doc/">the documentation page</a>  for more details.
 
