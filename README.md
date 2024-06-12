@@ -42,7 +42,7 @@ Once a user completes a registration in the Algocode platfrom, a _profile_  for 
 
 **A. Documentation**
 
-Please visit <a href="https://auth-doc.algocode.site/doc/">the documentation page</a>  for the detailed guide on Algocode Auth Service.
+Please visit the <a href="https://auth-doc.algocode.site/doc/">documentation page</a>  for the detailed guide on Algocode Auth Service.
 
 > However, all the APIs are referenced in the **_API Reference_** section below.
 
@@ -67,6 +67,11 @@ The Algocode Auth Services uses the following services to serve the request duri
     c. Celery to process tasks asynchronously.
     d. Flower to monitor celery worker.
     e. Mailhog to mock email management.
+    f. Django as backend.
+    g. Django Rest Framework for API.
+    h. PostgreSQL for user management database.
+    i. Redis for celery backend. 
+    l. Docker to containerize the service. 
 
 <br/>
 <br/>  
@@ -82,9 +87,14 @@ The Algocode Auth Services uses the following services to serve the request duri
     b. Nginx Proxy Manager to manage Nginx.
     c. Portainer to manage and monitor docker container in Auth Service. 
     b. Gunicorn as application server.
-    c. Celery to process tasks asynchronously.
-    d. Flower to monitor celery worker.
-    e. Resend as email service.
+    e. Celery to process tasks asynchronously.
+    f. Flower to monitor celery worker.
+    g. Resend as email service.
+    h. Django as backend.
+    i. Django Rest Framework for API.
+    j. PostgreSQL for user management database.
+    k. Redis for celery backend. 
+    l. Docker to containerize the service. 
 
 #### Deployment
 
