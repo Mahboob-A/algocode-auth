@@ -52,7 +52,7 @@ Please visit <a href="https://auth-doc.algocode.site/doc/">the documentation pag
 
 **C. About Algocode**
 
-> This is Code Manager Service specific guideline.
+> This is Algocode Auth Service specific guideline.
 >> **Please visit <a href="https://github.com/Mahboob-A/algocode">Algocode</a> to learn the mircroservices architecture of Algocode and more in-depth guideline how to submit a solution to Algocode platform.**
 
 <br/> <br/><details>
