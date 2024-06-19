@@ -8,7 +8,7 @@ set -o nounset
 
 
 # Export the variables in the host machine. 
-if [[ -z "${PROSTREAM_ALGO_AUTH_EC2_IP_ADDR}" ]]; then
+if [[ -z "${ALGOCODE_AUTHRCEE_EC2_IP_ADDR}" ]]; then
     echo "EC2 Server IP Address for Auth and Code Manager Service is not defined."
     echo "Please export the EC2 server IP address in host machine and try again."
     exit 1

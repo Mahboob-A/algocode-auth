@@ -39,6 +39,7 @@ services:
 
 # TODO Create the Network in the EC2 Server. WIthin this network, the Auth Service (production.yml) is Running. 
 #  RCE Engine network to monitor RCE containers in Portainer. 
+# Algocode Auth Service and RCEE service is running in same server. 
 networks:
   production-algocode-auth-service-network:
    external: true
