@@ -3,7 +3,7 @@
 set -o errexit 
 set -o nounset 
 
-# TODO ProStream EC2 server has been used to deploy the project. 
+# TODO  Saimun EC2 server has been used to deploy the project. 
 #  Make sure the Environment variables are properly exported in the HOST Machine. 
 
 
@@ -77,4 +77,4 @@ ssh -i "${ALGOCODE_AUTHRCEE_EC2_PEM}" -o StrictHostKeyChecking=no ubuntu@"${ALGO
 
 ENDSSH
 
-echo "Build and Deploy in the Server is Successful ... "
+echo "Build and Deploy of Algocode Auth Service in the Server is Successful ... "
