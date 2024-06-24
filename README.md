@@ -9,7 +9,7 @@
 Algocode is a DSA practice platform just like Leetcode!
 <br/>
 <br/>
-<a href="https://github.com/Mahboob-A/algocode-auth"><strong>Read the blog »</strong></a>
+<a href="https://imehboob.medium.com/my-experience-building-a-leetcode-like-online-judge-and-how-you-can-build-one-7e05e031455d"  target="_blank" ><strong>Read the blog »</strong> </a>
 <br/>
 <br/>
 <a href="https://github.com/Mahboob-A/algocode-auth">Algocode Auth Service .</a>  
@@ -74,9 +74,9 @@ The Algocode Auth Services uses the following services to serve the request duri
     l. Docker to containerize the service. 
 
 <br/>
-<br/>  
+</details>
 
-</details><details>
+<details>
 <summary><h3 align="center">Production Stage</h3></summary>
 
 #### Production Stage of Auth Service
@@ -101,9 +101,29 @@ The Algocode Auth Services uses the following services to serve the request duri
 The Auth Service is deployed in Azure VM Ubuntu 22.04 Server. 
 
 <br/>
-<br/>  
+</details>
 
-</details><details>
+<details>
+<summary><h3 align="center">Watch In Action</h3></summary>
+
+
+#### A. Long Video (Describes all the features and architecture)
+- Watch from `16:30` for code execution begin and  `18:30` for code submission result. 
+
+<a href="https://www.youtube.com/watch?v=TbiRWL-11Fo&t=990s" target="_blank">
+  <img src="https://img.youtube.com/vi/TbiRWL-11Fo/0.jpg" alt="Watch the video">
+</a>
+
+#### B. Short Video (Only core features) 
+- Watch from `09:30` for code execution begin and  `11:30` for code submission result. 
+
+<a href="https://www.youtube.com/watch?v=EgtAEjH53BA&t=571s" target="_blank">
+  <img src="https://img.youtube.com/vi/EgtAEjH53BA/0.jpg" alt="Watch the video">
+</a>
+<br/>
+</details>
+
+<details>
 <summary><h3 align="center">API Reference - User Management</h3></summary>
 
 Algocode uses JWT tokens as cookies to manage Authentication/Authorization token.
@@ -197,9 +217,9 @@ To learn more on **Registration APIs** please also visit here - <a href="https:/
 ```
 
 <br/>
-<br/>  
+</details>
 
-</details><details>
+<details>
 <summary><h3 align="center">API Reference - User Details</h3></summary>
 
 
@@ -222,9 +242,9 @@ To learn more on **Registration APIs** please also visit here - <a href="https:/
 | `id`    | `string` |  **Required** The `id` of the user to get details  |
 
 <br/>
-<br/>  
+</details>
 
-</details><details>
+<details>
 <summary><h3 align="center">API Reference - Profile Details</h3></summary>
 
 
@@ -275,9 +295,9 @@ Profiles are the more user centric details for a user.
 Please visit <a href="https://cm-doc.algocode.site/doc/">the documentation page</a>  for more details.
 
 <br/>
-<br/>  
+</details>
 
-</details><details>
+<details>
 <summary><h3 align="center">Run Locally and Contribution</h3></summary>
 
 #### Run Locally
@@ -295,9 +315,9 @@ If you use `Windows` Operating System, please run the  respective `docker comman
 You are always welcome to contribute to the project. Please `open an issue` or `raise a PR` on the project.  
 
 <br/>
-<br/>  
-
 </details>
+
+
 <details>
   <summary><h3 align="center">Code Submission Result Examples</h3></summary>
 
@@ -309,13 +329,13 @@ You are always welcome to contribute to the project. Please `open an issue` or `
 
 ##### A. AC Solution 
 
- ![dd8dbfe4-621b-49f1-b3a6-7ab2a892db87](https://github.com/Mahboob-A/algocode/assets/109282492/378d23ae-e059-47eb-866d-7c73d329b430) 
+![dd8dbfe4-621b-49f1-b3a6-7ab2a892db87](https://github.com/Mahboob-A/algocode/assets/109282492/378d23ae-e059-47eb-866d-7c73d329b430) 
 <br/>
 <br/>
 
 ##### B. WA Solution 
 
-  ![bedb4255-86c9-4417-b920-5976e6129cbb](https://github.com/Mahboob-A/algocode/assets/109282492/69bce2c1-5e16-4685-9069-23492068b55e)
+![bedb4255-86c9-4417-b920-5976e6129cbb](https://github.com/Mahboob-A/algocode/assets/109282492/69bce2c1-5e16-4685-9069-23492068b55e)
 <br/>
 <br/>
 
@@ -346,9 +366,8 @@ You are always welcome to contribute to the project. Please `open an issue` or `
 <br/>
 <br/>
 
-<br/>
 
-</details><br/>
+</details>
 
 <a href="https://www.linux.org/" target="blank">
 <img align="center" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="Linux" height="40" width="40" />
@@ -399,7 +418,24 @@ You are always welcome to contribute to the project. Please `open an issue` or `
 
 #### 🔗 Links
 
-
-[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/i-mahboob-alam/)
-[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://x.com/iMahboob_A)
+[![Email Me](https://img.shields.io/badge/mahboob-black?style=flat&logo=gmail)](mailto:connect.mahboobalam@gmail.com?subject=Hello) 
+  <a href="https://twitter.com/imahboob_a" target="_blank">
+    <img src="https://img.shields.io/badge/Twitter-05122A?style=flat&logo=twitter&logoColor=white" alt="Twitter">
+  </a>
+  <a href="https://linkedin.com/in/i-mahboob-alam" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-05122A?style=flat&logo=linkedin&logoColor=white" alt="LinkedIn">
+  </a>
+  <a href="https://hashnode.com/@imehboob" target="_blank">
+    <img src="https://img.shields.io/badge/Hashnode-05122A?style=flat&logo=hashnode&logoColor=white" alt="Hashnode">
+  </a>
+  <a href="https://medium.com/@imehboob" target="_blank">
+    <img src="https://img.shields.io/badge/Medium-05122A?style=flat&logo=medium&logoColor=white" alt="Medium">
+  </a>
+  <a href="https://dev.to/imahboob_a" target="_blank">
+    <img src="https://img.shields.io/badge/Dev.to-05122A?style=flat&logo=dev.to&logoColor=white" alt="Devto">
+  </a>
+  <a href="https://www.leetcode.com/mahboob-alam" target="_blank">
+    <img src="https://img.shields.io/badge/LeetCode-05122A?style=flat&logo=leetcode&logoColor=white" alt="LeetCode">
+  </a>
+  
 <br/>
